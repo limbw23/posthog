@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Form Page 1</title>
+
+<script>
+    !function(t,e){var o,n,p,r;e.__SV||(window.posthog=e,e._i=[],e.init=function(i,s,a){function g(t,e){var o=e.split(".");2==o.length&&(t=t[o[0]],e=o[1]),t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}}(p=t.createElement("script")).type="text/javascript",p.async=!0,p.src=s.api_host.replace(".i.posthog.com","-assets.i.posthog.com")+"/static/array.js",(r=t.getElementsByTagName("script")[0]).parentNode.insertBefore(p,r);var u=e;for(void 0!==a?u=e[a]=[]:a="posthog",u.people=u.people||[],u.toString=function(t){var e="posthog";return"posthog"!==a&&(e+="."+a),t||(e+=" (stub)"),e},u.people.toString=function(){return u.toString(1)+".people (stub)"},o="init capture register register_once register_for_session unregister opt_out_capturing has_opted_out_capturing opt_in_capturing reset isFeatureEnabled getFeatureFlag getFeatureFlagPayload reloadFeatureFlags group identify setPersonProperties setPersonPropertiesForFlags resetPersonPropertiesForFlags setGroupPropertiesForFlags resetGroupPropertiesForFlags resetGroups onFeatureFlags addFeatureFlagsHandler onSessionId getSurveys getActiveMatchingSurveys renderSurvey canRenderSurvey getNextSurveyStep".split(" "),n=0;n<o.length;n++)g(u,o[n]);e._i.push([i,s,a])},e.__SV=1)}(document,window.posthog||[]);
+    posthog.init('phc_uI43wBi2ZIxcR55y9v4s7K47wlM4heZnJyU82vvWojS', {
+        api_host: 'https://eu.i.posthog.com',
+        defaults: '2026-01-30'
+    })
+  </script>
+
+</head>
+
+<body>
+
+<h2>Step 1/3 : Enter your particulars</h2>
+
+<form onsubmit="submitForm(event)">
+
+<label>Name</label><br>
+<input id="name"><br><br>
+
+<label>Address</label><br>
+<input id="addr"><br><br>
+
+<button type="submit">Submit</button>
+
+</form>
+
+<script>
+
+const email = localStorage.getItem("user_email");
+const name = localStorage.getItem("user_name");
+
+
+if(email){
+  posthog.identify(email, {
+    email: email,
+    name: name
+  });
+}
+
+function submitForm(event){
+
+  event.preventDefault();
+
+  const name = document.getElementById("name").value;
+  const addr = document.getElementById("addr").value;
+  
+  localStorage.setItem("name", name);
+  localStorage.setItem("addr", addr);
+
+  posthog.capture("form_submitted", {
+    name: name,
+    address: addr
+  });
+
+  window.location.href = "/form2.html";
+}
+
+</script>
+
+</body>
+</html>
